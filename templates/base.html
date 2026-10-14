@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-50">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Student Attendance Tracker{% endblock %} | Academic Portal</title>
+  <meta name="description" content="Production-ready Student Attendance Tracking and Reporting System built with Python, Flask, SQLAlchemy, and PostgreSQL.">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body class="h-full flex flex-col md:flex-row text-slate-800">
+
+  <!-- Mobile Top Bar -->
+  <div class="md:hidden flex items-center justify-between bg-slate-900 text-white px-4 py-3 border-b border-slate-800">
+    <div class="flex items-center space-x-2">
+      <div class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center font-bold text-white shadow-sm">
+        SA
+      </div>
+      <span class="font-bold tracking-tight text-slate-100">Attendance Portal</span>
+    </div>
+    <button id="mobileMenuBtn" class="p-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500" aria-label="Toggle Navigation Menu">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Sidebar Navigation -->
+  <aside id="sidebar" class="hidden md:flex flex-col w-full md:w-64 bg-slate-900 text-slate-200 border-r border-slate-800 shrink-0 select-none">
+    <!-- Brand / Header -->
+    <div class="p-6 border-b border-slate-800 flex items-center space-x-3">
+      <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center font-bold text-white text-lg shadow-md">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+      </div>
+      <div>
+        <h1 class="font-bold text-base text-white tracking-tight leading-snug">AttendanceTrack</h1>
+        <p class="text-xs text-slate-400">College Portal</p>
+      </div>
+    </div>
+
+    <!-- Nav Items -->
+    <nav class="flex-1 px-4 py-6 space-y-1.5" aria-label="Main Navigation">
+      <a href="{{ url_for('dashboard') }}" 
+         class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors {% if request.endpoint == 'dashboard' %}bg-indigo-600 text-white shadow-sm{% else %}text-slate-300 hover:bg-slate-800 hover:text-white{% endif %}">
+        <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+        </svg>
+        <span>Dashboard</span>
+      </a>
+
+      <a href="{{ url_for('students') }}" 
+         class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors {% if request.endpoint in ['students', 'add_student', 'edit_student', 'student_history'] %}bg-indigo-600 text-white shadow-sm{% else %}text-slate-300 hover:bg-slate-800 hover:text-white{% endif %}">
+        <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+        </svg>
+        <span>Students</span>
+      </a>
+
+      <a href="{{ url_for('attendance') }}" 
+         class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors {% if request.endpoint == 'attendance' %}bg-indigo-600 text-white shadow-sm{% else %}text-slate-300 hover:bg-slate-800 hover:text-white{% endif %}">
+        <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+        </svg>
+        <span>Attendance</span>
+      </a>
+
+      <a href="{{ url_for('reports') }}" 
+         class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors {% if request.endpoint == 'reports' %}bg-indigo-600 text-white shadow-sm{% else %}text-slate-300 hover:bg-slate-800 hover:text-white{% endif %}">
+        <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+        </svg>
+        <span>Reports</span>
+      </a>
+    </nav>
+
+    <!-- Database Status in Sidebar Footer -->
+    <div class="p-4 border-t border-slate-800 bg-slate-950/60 text-xs">
+      <div class="flex items-center justify-between mb-1.5">
+        <span class="text-slate-400 font-medium">Database Persistence</span>
+        {% if db_connected %}
+          <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1 animate-pulse"></span>
+            PostgreSQL
+          </span>
+        {% else %}
+          <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20">
+            <span class="w-1.5 h-1.5 rounded-full bg-amber-400 mr-1"></span>
+            Pending
+          </span>
+        {% endif %}
+      </div>
+      <p class="text-[11px] text-slate-400 leading-tight">
+        {% if db_connected %}
+          Connected to Hosted PostgreSQL
+        {% else %}
+          DATABASE_URL not configured
+        {% endif %}
+      </p>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main class="flex-1 flex flex-col min-w-0 overflow-y-auto bg-slate-50">
+    
+    <!-- Top System Notice if Database is NOT connected -->
+    {% if not db_connected %}
+    <div class="bg-amber-50 border-b border-amber-200 px-6 py-4 text-amber-900">
+      <div class="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div class="flex items-start space-x-3">
+          <svg class="w-5 h-5 text-amber-600 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+          </svg>
+          <div>
+            <h3 class="text-sm font-semibold text-amber-900">Hosted PostgreSQL Database Required</h3>
+            <p class="text-xs text-amber-700 mt-0.5">
+              The application requires a PostgreSQL connection string to persist records. Please set the <code class="font-mono bg-amber-100 px-1 py-0.5 rounded text-amber-800">DATABASE_URL</code> environment variable (e.g. from Neon.tech).
+            </p>
+          </div>
+        </div>
+        <div class="shrink-0 text-xs text-amber-800 bg-amber-100 border border-amber-300 rounded px-3 py-1 font-mono">
+          DATABASE_URL=pending
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Flash Messages -->
+    <div class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="space-y-3 mb-6">
+            {% for category, message in messages %}
+              <div class="flex items-start justify-between p-4 rounded-xl border text-sm font-medium shadow-sm transition-all
+                {% if category == 'success' %}
+                  bg-emerald-50 text-emerald-900 border-emerald-200
+                {% elif category == 'error' %}
+                  bg-rose-50 text-rose-900 border-rose-200
+                {% elif category == 'warning' %}
+                  bg-amber-50 text-amber-900 border-amber-200
+                {% else %}
+                  bg-indigo-50 text-indigo-900 border-indigo-200
+                {% endif %}"
+                role="alert">
+                <div class="flex items-start space-x-3">
+                  {% if category == 'success' %}
+                    <svg class="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                  {% elif category == 'error' %}
+                    <svg class="w-5 h-5 text-rose-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                  {% elif category == 'warning' %}
+                    <svg class="w-5 h-5 text-amber-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                  {% else %}
+                    <svg class="w-5 h-5 text-indigo-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                  {% endif %}
+                  <span>{{ message }}</span>
+                </div>
+                <button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-slate-600 focus:outline-none ml-4" aria-label="Dismiss Alert">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+    </div>
+
+    <!-- Page Body Block -->
+    <div class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1">
+      {% block content %}{% endblock %}
+    </div>
+
+    <!-- Clean Footer -->
+    <footer class="border-t border-slate-200 bg-white py-4 px-6 text-center text-xs text-slate-500">
+      <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+        <span>Student Attendance Tracker &copy; {{ now_year }} &middot; Academic Portal</span>
+        <span class="text-slate-400 font-mono text-[11px]">Production PostgreSQL &middot; Vercel Ready</span>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    // Toggle mobile sidebar
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const sidebar = document.getElementById('sidebar');
+    if (mobileMenuBtn && sidebar) {
+      mobileMenuBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('hidden');
+      });
+    }
+  </script>
+</body>
+</html>
