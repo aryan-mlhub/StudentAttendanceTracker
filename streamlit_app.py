@@ -1,0 +1,32 @@
+"""
+🎓 TrackAttend - Student Attendance Tracker
+Streamlit Application Entrypoint for Streamlit Community Cloud and Local Use
+
+Compatible with:
+- Streamlit Community Cloud auto-detection (`streamlit_app.py` or `app.py`)
+- Local CLI (`streamlit run streamlit_app.py` or `streamlit run app.py` or `python app.py`)
+"""
+
+import sys
+from pathlib import Path
+
+# Add streamlit_app to sys.path so backend imports work seamlessly
+STREAMLIT_APP_DIR = Path(__file__).resolve().parent / "streamlit_app"
+if str(STREAMLIT_APP_DIR) not in sys.path:
+    sys.path.insert(0, str(STREAMLIT_APP_DIR))
+
+# If user runs directly via `python streamlit_app.py` (not via `streamlit run`), invoke Streamlit CLI
+if __name__ == "__main__" and "streamlit.runtime" not in sys.modules:
+    try:
+        from streamlit.web import cli as stcli
+        sys.argv = ["streamlit", "run", str(STREAMLIT_APP_DIR / "app.py")]
+        sys.exit(stcli.main())
+    except ImportError:
+        pass
+
+# When run via `streamlit run streamlit_app.py` or deployed on Streamlit Cloud
+app_script = STREAMLIT_APP_DIR / "app.py"
+globals()["__file__"] = str(app_script)
+with open(app_script, "r", encoding="utf-8") as f:
+    code = compile(f.read(), str(app_script), "exec")
+    exec(code, globals())

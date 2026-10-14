@@ -28,8 +28,9 @@ if __name__ == "__main__" and "streamlit.runtime" not in sys.modules:
     except ImportError:
         pass
 
-# When run via `streamlit run app.py`
+# When run via `streamlit run app.py` or deployed on Streamlit Cloud
 app_script = STREAMLIT_APP_DIR / "app.py"
+globals()["__file__"] = str(app_script)
 with open(app_script, "r", encoding="utf-8") as f:
     code = compile(f.read(), str(app_script), "exec")
     exec(code, globals())

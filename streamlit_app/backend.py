@@ -32,6 +32,10 @@ except ImportError:
 BACKEND_DIR = Path(__file__).resolve().parent
 DEFAULT_DB_PATH = BACKEND_DIR / "attendance_tracker.db"
 TEMPLATES_DIR = BACKEND_DIR / "templates"
+if not TEMPLATES_DIR.exists() or not (TEMPLATES_DIR / "sample_students.csv").exists():
+    fallback_templates = BACKEND_DIR.parent / "templates"
+    if fallback_templates.exists():
+        TEMPLATES_DIR = fallback_templates
 
 # Business Logic Rules
 ATTENDANCE_DEFICIT_THRESHOLD = 75.0

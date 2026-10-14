@@ -10,16 +10,38 @@ Available in two versions:
 
 ## ⚡ Quick Launch
 
-### 🌐 Run Streamlit Web Application
+### 🌐 Run Streamlit Web Application Locally
 ```powershell
-pip install -r streamlit_app/requirements.txt
-python -m streamlit run streamlit_app/app.py
+pip install -r requirements.txt
+streamlit run app.py
 ```
+*(You can also run `streamlit run streamlit_app.py` or `python app.py`)*
 
 ### 🖥️ Run Tkinter Desktop Application
 ```powershell
 python main.py
 ```
+
+---
+
+## 🚀 1-Click Deployment to Streamlit Community Cloud
+
+This repository is optimized for **Streamlit Community Cloud** ([share.streamlit.io](https://share.streamlit.io/)):
+
+1. **Push your code to GitHub** (if you made local changes):
+   ```powershell
+   git push origin main
+   ```
+2. **Open Streamlit Community Cloud**:
+   - Go to [share.streamlit.io](https://share.streamlit.io/) and log in with your GitHub account.
+   - Click the **"New app"** button.
+3. **Select Repository Settings**:
+   - **Repository:** `aryan-mlhub/StudentAttendanceTracker`
+   - **Branch:** `main`
+   - **Main file path:** `streamlit_app.py` *(or `app.py`, both are auto-supported!)*
+4. **Click "Deploy!"**:
+   - Streamlit Cloud will install packages from `requirements.txt` and launch your live web application with a public shareable URL.
+   - **Auto Demo Data**: When the container boots up, it automatically seeds sample students and 5 days of realistic attendance history so evaluators can test the application immediately!
 
 ---
 
