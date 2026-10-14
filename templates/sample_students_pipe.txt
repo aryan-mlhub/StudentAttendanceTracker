@@ -1,0 +1,11 @@
+# Format 1: Key-Value Structured Student Records
+Roll No: 101 | Name: Rahul Sharma | Class: CSE | Section: A
+Roll No: 102 | Name: Priya Verma | Class: CSE | Section: A
+Roll No: 103 | Name: Aman Patel | Class: CSE | Section: A
+Roll No: 104 | Name: Sneha Kulkarni | Class: CSE | Section: A
+Roll No: 105 | Name: Vikram Singh | Class: CSE | Section: A
+Roll No: 106 | Name: Ananya Iyer | Class: CSE | Section: B
+Roll No: 107 | Name: Rohan Gupta | Class: CSE | Section: B
+Roll No: 108 | Name: Meera Nair | Class: CSE | Section: B
+Roll No: 109 | Name: Kavya Reddy | Class: ECE | Section: A
+Roll No: 110 | Name: Arjun Das | Class: ECE | Section: A

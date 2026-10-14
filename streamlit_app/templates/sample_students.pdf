@@ -1,0 +1,76 @@
+%PDF-1.3
+%‚„œ”
+1 0 obj
+<<
+/Producer (pypdf)
+>>
+endobj
+2 0 obj
+<<
+/Type /Pages
+/Count 1
+/Kids [ 4 0 R ]
+>>
+endobj
+3 0 obj
+<<
+/Type /Catalog
+/Pages 2 0 R
+>>
+endobj
+4 0 obj
+<<
+/Type /Page
+/Resources <<
+/Font <<
+/F1 <<
+/Type /Font
+/Subtype /Type1
+/BaseFont /Helvetica
+>>
+>>
+>>
+/MediaBox [ 0.0 0.0 612 792 ]
+/Parent 2 0 R
+/Contents <<
+/Length 1085
+>>
+stream
+BT
+/F1 11 Tf
+50 740 Td
+(DEPARTMENT OF COMPUTER SCIENCE & ENGINEERING) Tj
+0 -20 Td (STUDENT ADMISSION AND ATTENDANCE REGISTER - 2026) Tj
+0 -20 Td (--------------------------------------------------------------------------------) Tj
+0 -20 Td (Roll No: 101 | Name: Rahul Sharma | Class: CSE | Section: A) Tj
+0 -20 Td (Roll No: 102 | Name: Priya Verma | Class: CSE | Section: A) Tj
+0 -20 Td (Roll No: 103 | Name: Aman Patel | Class: CSE | Section: A) Tj
+0 -20 Td (Roll No: 104 | Name: Sneha Kulkarni | Class: CSE | Section: A) Tj
+0 -20 Td (Roll No: 105 | Name: Vikram Singh | Class: CSE | Section: A) Tj
+0 -20 Td (Roll No: 106 | Name: Ananya Iyer | Class: CSE | Section: B) Tj
+0 -20 Td (Roll No: 107 | Name: Rohan Gupta | Class: CSE | Section: B) Tj
+0 -20 Td (Roll No: 108 | Name: Meera Nair | Class: CSE | Section: B) Tj
+0 -20 Td (Roll No: 109 | Name: Kavya Reddy | Class: ECE | Section: A) Tj
+0 -20 Td (Roll No: 110 | Name: Arjun Das | Class: ECE | Section: A) Tj
+0 -20 Td (--------------------------------------------------------------------------------) Tj
+0 -20 Td (Page 1 of 1) Tj
+ET
+endstream
+>>
+endobj
+xref
+0 5
+0000000000 65535 f 
+0000000015 00000 n 
+0000000054 00000 n 
+0000000113 00000 n 
+0000000162 00000 n 
+trailer
+<<
+/Size 5
+/Root 3 0 R
+/Info 1 0 R
+>>
+startxref
+1459
+%%EOF

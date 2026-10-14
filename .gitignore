@@ -1,43 +1,13 @@
-# Python
 __pycache__/
 *.py[cod]
 *$py.class
-*.so
-.Python
+*.sqlite3
+*.db
+.env
+.venv/
 env/
 venv/
-.venv/
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-
-# Environment secrets (Never commit real database credentials or secret keys)
-.env
-.env.local
-.env.*.local
-
-# Vercel
-.vercel
-
-# IDEs
-.idea/
-.vscode/
-*.swp
-*.swo
-
-# Database files / temporary files
-*.sqlite
-*.db
-scratch/
+.pytest_cache/
+.coverage
+htmlcov/
+*.log
